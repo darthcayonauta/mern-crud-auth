@@ -78,13 +78,35 @@ export const login = async (req,res) => {
     }
 } ;
 
-export const logout = (req,res) => {
-    res.cookie('token',"",{
-        expires: new Date(0) 
+export const logout = async (req, res) => {
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(0),
+    });
+    return res.sendStatus(200);
+  };
+
+export const profile = async (req,res) =>{
+
+    const userFound = await User.findById(req.user.id) 
+
+    //si no ecuentra usuario
+    if (!userFound) return res.status(400).json({message:"Usuario no encontrado"})
+
+    //de lo contrario, envias
+    return res.json({
+        id:userFound._id,
+        username: userFound.username,
+        email: userFound.email,
+        createdAt: userFound.createdAt,
+        updatedAt: userFound.updatedAt
+
     }) ;
 
-    //envio una respuesta al cliente
-    res.status(200) ;
+    //console.log(req.user);
+    //res.send('profile') ;
 }
+
 
 //export const login = (req,res) => res.send('login') ;
