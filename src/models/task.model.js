@@ -12,6 +12,12 @@ const taskSchema =  new mongoose.Schema({
     date : {
         type : Date,
         default : Date.now
+    },
+    user:{
+        type: mongoose.Schema.ObjectId, //es similar a las claves foráneas
+        ref: 'User', //hace referencia al Esquema 'User'
+        required : true
+
     }
 }, {timestamp: true})
 
