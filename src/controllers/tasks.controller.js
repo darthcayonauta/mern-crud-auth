@@ -37,6 +37,21 @@ export const getTask = async (req,res) => {
 
 }
 
+export const deleteTask = async (req, res) => {
+    console.log('eliminando....'+req.params.id)
+    try {
+      const deletedTask = await Task.findByIdAndDelete(req.params.id);
+      if (!deletedTask)
+        return res.status(404).json({ message: "Task not found" });
+  
+      return res.sendStatus(204);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
+
+
+/*
 export const deleteTask = async (req,res) => {
     const task =await Task.findByIdAndDelete(req.params.id) ;
 
@@ -46,7 +61,7 @@ export const deleteTask = async (req,res) => {
 
     res.json(task) ;
 
-}
+}*/
 
 export const updateTask = async (req,res) => {
     const task =await Task.findByIdAndUpdate(req.params.id,
