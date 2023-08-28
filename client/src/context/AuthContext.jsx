@@ -58,6 +58,15 @@ export const AuthProvider =  ({ children }) => {
         }
     }
 
+const logout = ()=>{
+    //sólo eliminas la cookie
+    Cookies.remove("token") ;
+    setIsAuthenticated(false);
+    setUser(null)
+}
+
+
+
     useEffect(()=>{
         if( errors.length > 0){
          const timer =  setTimeout(()=>{
@@ -110,6 +119,7 @@ export const AuthProvider =  ({ children }) => {
     <AuthContext.Provider value={{
         signup, 
         signin,
+        logout,
         loading,
         user,
         isAuthenticated,
